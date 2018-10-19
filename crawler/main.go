@@ -1,30 +1,15 @@
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
+	"Go_Spider/crawler/engine"
+	"Go_Spider/crawler/zhenai/parser"
 )
 
 func main() {
 
-	resp, err := http.Get("http://www.zhenai.com/n/register?channelId=900122&subChannelId=")
-
-	if err != nil {
-		panic(err)
-	}
-
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		fmt.Println("error : status code :", resp.StatusCode)
-		return
-	}
-
-	all, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("%s\n", all)
+	engine.Run(engine.Request{
+		Url:        "http://www.zhenai.com/zhenghun",
+		ParserFunc: parser.ParseCityList,
+	})
 
 }
