@@ -21,9 +21,11 @@ var genderRe = regexp.MustCompile(`<td><span class="label">性别：</span><span
 var houseRe = regexp.MustCompile(`<td><span class="label">住房条件：</span><span field="">([^<]+)</span></td>`)
 var carRe = regexp.MustCompile(`<td><span class="label">是否购车：</span><span field="">([^<]+)</span></td>`)
 
-func ParseProfile(contents []byte, name string) engine.ParserResult {
+func ParseProfile(contents []byte, url string, name string) engine.ParserResult {
 
 	profile := model.Profile{}
+	profile.Url = url
+	profile.Id = url
 	profile.Name = name
 	profile.Marriage = extractString(contents, marrigeRe)
 	profile.Income = extractString(contents, incomeRe)
